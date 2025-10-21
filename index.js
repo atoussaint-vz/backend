@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config();
+const cors = require('cors'); // 👈 Importamos CORS
 
 const sequelize = require('./db');
 const clientesRouter = require('./routes/clientes');
@@ -7,6 +8,11 @@ const Cliente = require('./models/cliente'); // 👈 Importamos el modelo
 
 const app = express();
 const puerto = process.env.PORT || 3000;
+
+// 🔹 Middleware CORS
+app.use(cors()); // permite cualquier origen
+// Si quieres restringirlo a tu frontend en Vercel:
+// app.use(cors({ origin: 'https://tu-frontend.vercel.app' }));
 
 // Middleware para interpretar JSON
 app.use(express.json());

@@ -9,19 +9,26 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     port: process.env.DB_PUERTO,
     dialect: 'postgres',
-    logging: false,
+    logging: console.log, // 👈 activa logs SQL para ver qué hace Sequelize
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false, // necesario para Railway
+        rejectUnauthorized: false, // 👈 necesario para Railway
       },
     },
   }
 );
 
-// ✅ Probar conexión
-sequelize.authenticate()
-  .then(() => console.log('✅ Conexión a PostgreSQL exitosa'))
-  .catch(err => console.error('❌ Error de conexión:', err.message));
+// ✅ Verificar conexión con mensajes más útiles
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Conexión a PostgreSQL exitosa');
+  } catch (err) {
+    console.error('❌ Error al conectar con la base de datos:');
+    console.error('🔹 Código:', err.original?.code);
+    console.error('🔹 Mensaje:', err.message);
+  }
+})();
 
 module.exports = sequelize;

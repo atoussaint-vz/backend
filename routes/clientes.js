@@ -8,7 +8,10 @@ router.get('/', async (req, res) => {
     res.json(clientes);
   } catch (error) {
     console.error("❌ Error en la consulta de clientes:", error);
-    res.status(500).json({ error: "Error al obtener clientes" });
+    res.status(500).json({
+      error: "Error al obtener clientes",
+      detalle: error.message, // 👈 mostrará el motivo real
+    });
   }
 });
 
