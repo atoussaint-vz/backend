@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
-// Definimos el modelo cliente
-const Cliente = sequelize.define('Cliente', {
+// Definimos el modelo Cliente
+const Cliente = sequelize.define('cliente', {
   cod_cliente: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -22,9 +22,9 @@ const Cliente = sequelize.define('Cliente', {
     validate: { isEmail: true }
   }
 }, {
-  tableName: 'cliente',  // 👈 nombre exacto de la tabla en tu BD
-  timestamps: false,     // 👈 desactiva createdAt/updatedAt
-  freezeTableName: true  // 👈 evita que Sequelize pluralice el nombre
+  tableName: 'cliente',   // 👈 nombre exacto de la tabla en PostgreSQL
+  timestamps: false,      // 👈 no crea columnas createdAt/updatedAt
+  freezeTableName: true   // 👈 no pluraliza "cliente" a "clientes"
 });
 
 module.exports = Cliente;
